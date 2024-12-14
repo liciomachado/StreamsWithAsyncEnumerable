@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35122.118
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StreamsWithAsyncEnumerable", "StreamsWithAsyncEnumerable.csproj", "{E70AF88F-7F29-4459-B3D4-50313768FB9D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E70AF88F-7F29-4459-B3D4-50313768FB9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E70AF88F-7F29-4459-B3D4-50313768FB9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E70AF88F-7F29-4459-B3D4-50313768FB9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E70AF88F-7F29-4459-B3D4-50313768FB9D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4D8308E2-D56D-4A9A-967A-06FD68037992}
+	EndGlobalSection
+EndGlobal

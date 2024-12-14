@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stream Pessoas</title>
+</head>
+<body>
+<h1>Lista de Pessoas</h1>
+<ul id="pessoas-list"></ul>
+
+<script>
+        async function fetchPessoas() {
+            const response = await fetch('https://localhost:7162/items/stream', {
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder('utf-8');
+            let buffer = '';
+
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+
+                buffer += decoder.decode(value, { stream: true });
+                let boundary = buffer.lastIndexOf('\n');
+                if (boundary !== -1) {
+                    const chunk = buffer.slice(0, boundary);
+                    buffer = buffer.slice(boundary + 1);
+                    const pessoas = chunk.split('\n').filter(line => line.trim() !== '');
+
+                    for (const pessoa of pessoas) {
+                        try {
+                            const pessoaObj = JSON.parse(pessoa);
+                            displayPessoa(pessoaObj);
+                        } catch (e) {
+                            console.log(e);
+                        }
+                    }
+                }
+            }
+        }
+
+        function displayPessoa(pessoa) {
+            const pessoasList = document.getElementById('pessoas-list');
+            const listItem = document.createElement('li');
+            listItem.textContent = `${pessoa.Id}: ${pessoa.Nome}`;
+            pessoasList.appendChild(listItem);
+        }
+
+        fetchPessoas();
+    </script>
+</body>
+</html>

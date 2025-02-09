@@ -26,6 +26,31 @@ public class ItemsController : ControllerBase
         }
     }
 
+    [HttpGet("stream2")]
+    public async Task StreamData(CancellationToken ct)
+    {
+        Response.Headers.Append("Content-Type", "application/json; charset=utf-8");
+
+        await using var connection = new NpgsqlConnection(_connectionString);
+        await connection.OpenAsync(ct);
+
+        var command =
+            @"select cd_agent as id, 
+                nm_agent as Name,
+                vl_document as document
+                from geoid.agent 
+                order by cd_agent 
+                limit 1000000;";
+
+        var results = connection.QueryUnbufferedAsync<object>(command);
+        await foreach (var item in results)
+        {
+            var json = JsonSerializer.Serialize(item) + "\n";
+            await Response.WriteAsync(json, ct);
+            await Response.Body.FlushAsync(ct);
+        }
+    }
+
     private async IAsyncEnumerable<object> GetPessoasFromDatabase(CancellationToken ct)
     {
         await using var connection = new NpgsqlConnection(_connectionString);
